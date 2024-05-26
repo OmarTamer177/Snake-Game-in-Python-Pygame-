@@ -160,11 +160,11 @@ class MAIN:
         score_text = str(len(self.snake.body) - 3)
         score_surface = game_font.render(score_text, True, (56, 74, 12))
 
-        #topleft position
+        # top-left position
         score_rect = score_surface.get_rect(center=(6 + cell_size / 2, 6 + cell_size / 2))
 
-        #bottom right position
-        #score_rect = score_surface.get_rect(center=(cell_size*cell_number - 60, cell_size*cell_number - 30))
+        # bottom right position
+        # score_rect = score_surface.get_rect(center=(cell_size*cell_number - 60, cell_size*cell_number - 30))
 
         apple_rect = apple.get_rect(midleft=(score_rect.right, score_rect.centery))
         bg_rect = pygame.Rect(score_rect.left - 6, score_rect.top - 12,
@@ -176,7 +176,7 @@ class MAIN:
 
     def check_collision(self):
         if self.fruit.pos == self.snake.body[0]:
-            #if the fruit is inside the snake, keep randomizing
+            # if the fruit is inside the snake, keep randomizing
             invalid_pos = True
             while invalid_pos:
                 invalid_pos = False
@@ -203,6 +203,7 @@ class MAIN:
             self.game_over()
 
     def game_over(self):
+        print(len(self.snake.body) - 3)
         self.play_game_over_sound()
         self.fruit = Fruit()
         self.snake.reset()
@@ -235,13 +236,13 @@ while True:
         if event.type == SCREEN_UPDATE:
             main_game.update()
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP and main_game.snake.direction != Vector2(0, 1):
+            if event.key == pygame.K_UP and main_game.snake.body[0].x != main_game.snake.body[1].x:
                 main_game.snake.direction = Vector2(0, -1)
-            elif event.key == pygame.K_DOWN and main_game.snake.direction != Vector2(0, -1):
+            elif event.key == pygame.K_DOWN and main_game.snake.body[0].x != main_game.snake.body[1].x:
                 main_game.snake.direction = Vector2(0, 1)
-            elif event.key == pygame.K_RIGHT and main_game.snake.direction != Vector2(-1, 0):
+            elif event.key == pygame.K_RIGHT and main_game.snake.body[0].y != main_game.snake.body[1].y:
                 main_game.snake.direction = Vector2(1, 0)
-            elif event.key == pygame.K_LEFT and main_game.snake.direction != Vector2(1, 0):
+            elif event.key == pygame.K_LEFT and main_game.snake.body[0].y != main_game.snake.body[1].y:
                 main_game.snake.direction = Vector2(-1, 0)
     screen.fill((175, 215, 70))
     main_game.draw_elements()
